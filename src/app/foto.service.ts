@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CameraPhoto, CameraResultType, CameraSource, Capacitor, FilesystemDirectory, Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 
+
 const {Camera, Filesystem, Storage} = Plugins;
 
 @Injectable({
@@ -17,15 +18,6 @@ export class FotoService {
     this.platform = platform;
   }
 
-  public async tabahFoto() {
-    const Foto = await Camera.getPhoto ({
-      resultType : CameraResultType.Uri,
-      source : CameraSource.Camera,
-      quality:100,
-      allowEditing: true
-    });
-  }
-
   public async tambahFoto() {
     const Foto = await Camera.getPhoto ({
       resultType : CameraResultType.Uri,
@@ -33,7 +25,10 @@ export class FotoService {
       quality:100,
       allowEditing: true
     });
+    console.log('foto', Foto)
+
     const fileFoto = await this.simpanFoto(Foto);
+    console.log('a', fileFoto);
     this.dataFoto.unshift(fileFoto);
 
     Storage.set({
@@ -46,6 +41,7 @@ export class FotoService {
     const base64Data = await this.readAsBase64(foto);
 
     const namaFile = new Date().getTime()+'.jpeg';
+    console.log('nama', namaFile);
     const simpanFile = await Filesystem.writeFile({
       path : namaFile,
       data : base64Data,
@@ -119,7 +115,7 @@ export class FotoService {
       }
     }
     console.log(this.dataFoto);
-  } 
+  }
 }
 
 export interface Photo {

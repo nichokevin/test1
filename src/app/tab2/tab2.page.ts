@@ -15,7 +15,4 @@ export class Tab2Page {
   TambahFoto() {
     this.fotoService.tambahFoto();
   }
-  TabahFoto() {
-    this.fotoService.tabahFoto();
-  }
 }
